@@ -1,0 +1,13 @@
+apiVersion: V1
+kind: Service
+metadata:
+  name: deep-optics-service
+  namespace: gpn-mizzou-muem-lindsaymb
+spec:
+  selector:
+    app: deep-optics
+  ports:
+    - protocol: TCP
+      port: 10001
+      targetPort: 10001
+  type: clusterIP

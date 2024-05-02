@@ -27,7 +27,7 @@ spec:
         - name: deep-optics
           image: kovaleskilab/deep-optics:v1
           imagePullPolicy: Always
-          command: ["sleep", "3600"]
+          command: ["python", "src/deep-optics.py"]
           resources:
             requests:
               memory: 8Gi
