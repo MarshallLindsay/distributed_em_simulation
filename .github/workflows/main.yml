@@ -26,4 +26,4 @@ jobs:
             context: .
             file: ./Dockerfile-fourier-optics
             push: true
-            tags: $/deep-optics:v1
+            tags: deep-optics:v1
