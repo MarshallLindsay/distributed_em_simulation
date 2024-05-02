@@ -6,6 +6,13 @@ jobs:
     name: Build docker image
     runs-on: ubuntu-latest
     steps:
+      - name: free disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
       - # checkout the repository on the build machine
         name: Checkout
         uses: actions/checkout@v3
