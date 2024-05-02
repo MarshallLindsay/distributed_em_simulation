@@ -1,0 +1,15 @@
+FROM nvcr.io/nvidia/pytorch:23.12-py3
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y tmux vim htop
+RUN apt-get install -y python3-tk
+
+RUN pip install pytorch-lightning
+RUN pip install torchtext torchvision ipython jupyterlab loguru
+
+WORKDIR /develop/results
+WORKDIR /develop/data
+WORKDIR /develop/code
+
+COPY . /develop/code

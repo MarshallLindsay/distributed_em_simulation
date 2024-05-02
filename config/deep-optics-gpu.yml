@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deep-optics
+  namespace: gpn-mizzou-muem-lindsaymb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deep-optics
+  template:
+    metadata:
+      labels:
+        app: deep-optics
+    spec:
+      automountServiceAccountToken: false
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: topology.kubernetes.io/region
+                  operator: In
+                  values:
+                    - us-central
+      containers:
+        - name: deep-optics
+          image: kovaleskilab/deep-optics:v1
+          imagePullPolicy: Always
+          command: ["sleep", "3600"]
+          resources:
+            requests:
+              memory: 8Gi
+              cpu: 4 
+              nvidia.com/gpu: 1
+            limits:
+              memory: 8Gi
+              cpu: 4
+              nvidia.com/gpu: 1
+          ports:
+            - containerPort: 5432
+              #envFrom:
+              #  - secretRef:
+              #      name: postgres-mblgh6-secrets
+          volumeMounts:
+            - name: mblgh6-cs8275
+              mountPath: /develop/data
+      volumes:
+        - name: mblgh6-cs8275
+          persistentVolumeClaim:
+            claimName: mblgh6-cs8275
